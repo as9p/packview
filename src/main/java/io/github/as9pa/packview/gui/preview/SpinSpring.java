@@ -29,11 +29,11 @@ public final class SpinSpring {
 
     /**
      * Degrees to turn for the pointer moving from window pixel column {@code fromRawX} to {@code toRawX}, at
-     * {@code degPerGuiPx} per GUI pixel; a GUI pixel is {@code displayWidth / guiWidth} window pixels. Right turns
+     * {@code degPerGuiPx} per GUI pixel; a GUI pixel is {@code windowWidth / guiWidth} window pixels. Right turns
      * positive.
      */
-    public static float dragDegrees(int fromRawX, int toRawX, int guiWidth, int displayWidth, float degPerGuiPx) {
-        return (toRawX - fromRawX) * degPerGuiPx * guiWidth / Math.max(1, displayWidth);
+    public static float dragDegrees(int fromRawX, int toRawX, int guiWidth, int windowWidth, float degPerGuiPx) {
+        return (toRawX - fromRawX) * degPerGuiPx * guiWidth / Math.max(1, windowWidth);
     }
 
     /** A press in the view has moved far enough to become a spin; the spring's own speed is dropped. */
