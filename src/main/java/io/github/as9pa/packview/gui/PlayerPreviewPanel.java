@@ -55,6 +55,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Cursor;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -850,7 +851,7 @@ public final class PlayerPreviewPanel extends Gui {
             spun = true;
             spin.press(now);
         }
-        spin.drag(SpinSpring.dragDegrees(lastDragRawX, rawX, screenWidth, mc.displayWidth, SPIN_PER_PX), now);
+        spin.drag(SpinSpring.dragDegrees(lastDragRawX, rawX, screenWidth, windowWidth(), SPIN_PER_PX), now);
         lastDragRawX = rawX;
     }
 
@@ -882,9 +883,17 @@ public final class PlayerPreviewPanel extends Gui {
         sim.leftClick(onModel);
     }
 
-    /** GUI x of the centre of a display pixel column, unrounded, scaled the way GuiScreen scales mouse events. */
+    /** GUI x of the centre of a window pixel column, unrounded, scaled the way GuiScreen scales mouse events. */
     private float guiX(int rawX) {
-        return (rawX + 0.5F) * screenWidth / Math.max(1, mc.displayWidth);
+        return (rawX + 0.5F) * screenWidth / windowWidth();
+    }
+
+    /**
+     * Width in window pixels, the unit of raw LWJGL mouse x. Usually equal to mc.displayWidth, but a mod that renders
+     * a narrower frame and stretches it to the window (xclient's aspect ratio modes) lowers displayWidth only.
+     */
+    private static int windowWidth() {
+        return Math.max(1, Display.getWidth());
     }
 
     /** GUI y (down from the top) of the centre of a display pixel row given bottom up, as LWJGL reports it. */

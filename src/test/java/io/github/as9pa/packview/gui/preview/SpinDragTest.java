@@ -19,7 +19,13 @@ public class SpinDragTest {
     }
 
     @Test
-    public void zeroDisplayWidthDoesNotBlowUp() {
+    public void scalesByTheWindowWidthNotAStretchedFrame() {
+        // A 958 px frame at GUI scale 2 (479 GUI px) stretched to a 1280 px window: 1280 window px span the GUI.
+        assertEquals(479 * 1.5f, SpinSpring.dragDegrees(0, 1280, 479, 1280, 1.5f), 1e-3);
+    }
+
+    @Test
+    public void zeroWindowWidthDoesNotBlowUp() {
         assertEquals(15f, SpinSpring.dragDegrees(0, 10, 1, 0, 1.5f), 1e-5);
     }
 
